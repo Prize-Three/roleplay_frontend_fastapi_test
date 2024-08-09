@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+pydantic
+langchain
+langchain_community
+requests  # HuggingFaceHub 사용을 위해 필요할 수 있음
+huggingface_hub
+
+fastapi==0.65.2
+langchain_openai==1.0.0
