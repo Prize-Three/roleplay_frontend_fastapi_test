@@ -50,3 +50,67 @@ async def chat_with_bot(message: Message):
     except Exception as e:
         print(f"Error: {e}")
         raise HTTPException(status_code=500, detail="Internal Server Error")
+    
+@app.get("/history")
+async def get_history():
+    return {
+        "history_list": [
+            {
+                "history_id": 1,
+                "situation": "병원놀이",
+                "date": "2024-06-09",
+                "duration": "26:12",
+                "voice": "엄마"
+            },
+            {
+                "history_id": 2,
+                "situation": "학교놀이",
+                "date": "2024-06-07",
+                "duration": "41:08",
+                "voice": "아빠"
+            },
+            {
+                "history_id": 1,
+                "situation": "병원놀이",
+                "date": "2024-06-09",
+                "duration": "26:12",
+                "voice": "엄마"
+            },
+            {
+                "history_id": 2,
+                "situation": "학교놀이",
+                "date": "2024-06-07",
+                "duration": "41:08",
+                "voice": "아빠"
+            },
+            {
+                "history_id": 1,
+                "situation": "병원놀이",
+                "date": "2024-06-09",
+                "duration": "26:12",
+                "voice": "엄마"
+            },
+            {
+                "history_id": 2,
+                "situation": "학교놀이",
+                "date": "2024-06-07",
+                "duration": "41:08",
+                "voice": "아빠"
+            },
+            {
+                "history_id": 1,
+                "situation": "병원놀이",
+                "date": "2024-06-09",
+                "duration": "26:12",
+                "voice": "엄마"
+            },
+            {
+                "history_id": 2,
+                "situation": "학교놀이",
+                "date": "2024-06-07",
+                "duration": "41:08",
+                "voice": "아빠"
+            },
+            # 추가 데이터...
+        ]
+    }
