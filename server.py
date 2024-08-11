@@ -30,27 +30,40 @@ llm = ChatOpenAI(
     callbacks=[StreamingStdOutCallbackHandler()],
 )
 
-class Message(BaseModel):
-    question: str
+class MessageData(BaseModel):
+    message: dict
+    chat_history_id: dict
+
+class SelectionData(BaseModel):
+    voice_id: str
+    situation: str
+    my_role: str
+    ai_role: str
 
 @app.post("/chat")
-async def chat_with_bot(message: Message):
+async def chat_with_bot(data: MessageData):
     try:
-        # 'assistant' 역할의 빈 메시지를 제거
+        question = data.message.get('question')
+        history_id = data.chat_history_id.get('history_id')
+
         prompt = ChatPromptTemplate.from_messages([
             ("system", "You are an assistant, and your task is to answer only in Korean as if you were a visiting patient. The doctor is asking questions to better understand your symptoms. You answer the doctor's questions with simple and easy expressions."),
-            ("human", message.question)
+            ("human", question)
         ])
 
         chain = prompt | llm | StrOutputParser()
 
-        response = chain.invoke({"question": message.question})
+        response = chain.invoke({"question": question})
+        
+        print(f"Send message: {question}")
+        print(f"Processing history_id: {history_id}")
+
         return {"response": response}
 
     except Exception as e:
         print(f"Error: {e}")
         raise HTTPException(status_code=500, detail="Internal Server Error")
-    
+
 @app.get("/history")
 async def get_history():
     return {
@@ -69,48 +82,20 @@ async def get_history():
                 "duration": "41:08",
                 "voice": "아빠"
             },
-            {
-                "history_id": 1,
-                "situation": "병원놀이",
-                "date": "2024-06-09",
-                "duration": "26:12",
-                "voice": "엄마"
-            },
-            {
-                "history_id": 2,
-                "situation": "학교놀이",
-                "date": "2024-06-07",
-                "duration": "41:08",
-                "voice": "아빠"
-            },
-            {
-                "history_id": 1,
-                "situation": "병원놀이",
-                "date": "2024-06-09",
-                "duration": "26:12",
-                "voice": "엄마"
-            },
-            {
-                "history_id": 2,
-                "situation": "학교놀이",
-                "date": "2024-06-07",
-                "duration": "41:08",
-                "voice": "아빠"
-            },
-            {
-                "history_id": 1,
-                "situation": "병원놀이",
-                "date": "2024-06-09",
-                "duration": "26:12",
-                "voice": "엄마"
-            },
-            {
-                "history_id": 2,
-                "situation": "학교놀이",
-                "date": "2024-06-07",
-                "duration": "41:08",
-                "voice": "아빠"
-            },
             # 추가 데이터...
         ]
     }
+
+@app.post("/select")
+async def select(data: SelectionData):
+    try:
+        print(f"Received data: {data}")
+
+        response_data = {
+            "history_id": 1  # 예시로 고정된 값 사용
+        }
+
+        return response_data
+    except Exception as e:
+        print(f"Error: {e}")
+        raise HTTPException(status_code=500, detail="Internal Server Error")
