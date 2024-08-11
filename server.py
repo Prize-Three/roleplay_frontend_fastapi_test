@@ -99,3 +99,50 @@ async def select(data: SelectionData):
     except Exception as e:
         print(f"Error: {e}")
         raise HTTPException(status_code=500, detail="Internal Server Error")
+
+
+@app.get("/analysis")
+async def get_analysis():
+    return {
+        "role_play": {
+            "type": "병원놀이",
+            "child_role": "환자",
+            "ai_role": "의사",
+            "setting_voice": "엄마",
+            "start_time": "14:35:12",
+            "end_time": "20:35:12"
+        },
+        "conversation_summary": "의사와 환자가 대화하는 상황입니다...",
+        "language_development_analysis": {
+            "vocabulary_use": {
+                "total_word_count": 36,
+                "basic_word_count": 17,
+                "new_word_count": 5,
+                "new_used_words": ["약", "아파요", "열나요", "감사합니다"]
+            },
+            "sentence_structure": [
+                {"dialog_conent": "얼굴이 화끈하고 머리가 지끈합니다", "comment": "'화끈하다', '지끈하다'라는 감각적인 어휘를 사용하여 신체적 감각이나 감정을 구체적으로 묘사했습니다."},
+                {"dialog_conent": "목이 붓고 머리가 아파서 왔어요", "comment": "'목이 붓다', '머리가 아프다'라는 어휘를 사용하여 자신의 상태를 정확하게 묘사하고 있습니다. 단어 조합을 적절히 잘해서 활용하고 있습니다."}
+            ]
+        },
+        "emotional_development_analysis": {
+            "vocabulary_use": {
+                "total_word_count": 15,
+                "basic_word_count": 31,
+                "new_word_count": 2,
+                "new_used_words": ["감사합니다", "기뻐요", "행복해요"]
+            },
+            "sentence_structure": [
+                {"dialog_conent": "하루종일 머리가 아파서 우울했어요", "comment": "'우울하다'라는 감정 표현을 직접적으로 활용하여 자신의 기분을 묘사했습니다."},
+                {"dialog_conent": "하지만 맛있는 걸 먹어서 기분이 좋아졌어요", "comment": "'기분이 좋아지다'라는 감정 표현을 직접적으로 활용하여 자신의 기분을 묘사했습니다. 맛있는걸 먹고 난 후 긍정적인 감정 변화를 보였습니다."}
+            ]
+        },
+        "interaction_patterns": {
+            "child_questions_and_responses_rate": {
+                "child_responses": 12,
+                "ai_responses": 23
+            },
+            "interaction_summary": "의사가 대부분의 대화를 주도하면서 상황을 이끌어갔고, 환자 자신의 아픈 부분을 자세하게 설명하면서 활발한 상호작용이 이루어졌습니다."
+        },
+        "comprehensive_results": "민규는 언어 발달 측면에서 매우 우수한 모습을 보이고 있습니다..."
+    }
