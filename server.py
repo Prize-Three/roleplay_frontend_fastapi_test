@@ -40,6 +40,10 @@ class SelectionData(BaseModel):
     my_role: str
     ai_role: str
 
+class EndChatData(BaseModel):
+    chat_history_id: dict
+
+
 @app.post("/chat")
 async def chat_with_bot(data: MessageData):
     try:
@@ -146,3 +150,12 @@ async def get_analysis():
         },
         "comprehensive_results": "민규는 언어 발달 측면에서 매우 우수한 모습을 보이고 있습니다..."
     }
+
+@app.post("/end-chat")
+async def end_chat(data: EndChatData):
+    try:
+        history_id = data.chat_history_id.get('history_id')
+        print(f"Ending chat with history_id: {history_id}")
+    except Exception as e:
+        print(f"Error: {e}")
+        raise HTTPException(status_code=500, detail="Internal Server Error")
